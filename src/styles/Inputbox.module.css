@@ -22,7 +22,7 @@
 
 .boxContainer {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     background-color: white;
     border-style: solid;
@@ -32,10 +32,15 @@
     width: calc(1em + 75vw);        
 }
 
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);;
+}
+
 .taskItem {
     margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);
     text-align: left;
-    text-decoration-line: line-through;
 }
 
 .checkbox {
@@ -49,4 +54,8 @@
 
 
 
+}
+
+input:checked + svg {
+    display: block;
 }
