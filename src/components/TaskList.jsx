@@ -3,7 +3,6 @@ import moduleCss from "../styles/TaskList.module.css";
 import DeleteTask from './DeleteTask';
 import moment from "moment";
 import axios from "axios";
-
 const TaskList = ({tasks}) => {
   const [taskArray, setTaskArray] = useState([]);
   const [showDeleteTaskModal, setShowDeleteTaskModal] = useState(false);
@@ -12,7 +11,7 @@ const TaskList = ({tasks}) => {
 
   useEffect(() => {
     setTaskArray(tasks)
-    console.log(tasks)
+    // console.log(tasks)
   }, [tasks])
 
   const taskDone = (id) => {
@@ -27,7 +26,6 @@ const TaskList = ({tasks}) => {
 
       return item;
     });
-
     setTaskArray(newArray);
   };
 
@@ -46,20 +44,13 @@ const TaskList = ({tasks}) => {
           "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en"
         );
         setForecastWeatherData(res.data.weatherForecast)
-        console.log(res.data.weatherForecast)
+        // console.log(res.data.weatherForecast)
       } catch (error) {
-        
+        alert("The Observatory API does not work properly")
       }
     } 
     fetchData();
   }, [tasks])
-
-  useEffect(() => {
-    for (let i = 0; i < weatherForecastData.length; i++) {
-      // console.log(weatherForecastData[i].forecastDate)
-    }
-  }, [weatherForecastData])
-
 
   const simpleWeatherForecast = (date) => {
     for (let i = 0; i < weatherForecastData.length; i++) {
