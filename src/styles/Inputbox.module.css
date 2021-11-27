@@ -2,17 +2,27 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 0 5vh;
+    margin: 0 3vw;
 }
 
 .addToDo {
-    font-size: calc(0.75em + 0.5vw);
+    font-size: calc(1em + 0.5vw);
     font-weight: bold;
     margin-bottom: 0.75vh;
 }
 
+.inputForm {
+    display: flex;
+    flex-direction: column;
+    /* padding: 1rem;
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: yellowgreen; */
+}
+
 .box {
-    width: calc(1em + 75vw);
+    width: calc(1em + 50vw);
     height: calc(1em + 1.5vh);
     border-style: solid;
     border-color: rgba(200, 200, 200);
@@ -20,42 +30,3 @@
     border-radius: 5px;    
 }
 
-.boxContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border-style: solid;
-    border-color: rgba(200, 200, 200);;
-    border-width: 1px;
-    border-radius: 5px;
-    width: calc(1em + 75vw);        
-}
-
-.buttonContainer {
-    display: flex;
-    flex-direction: column;
-    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);;
-}
-
-.taskItem {
-    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);
-    text-align: left;
-}
-
-.checkbox {
-    display: flex;
-    flex-direction:row;
-    justify-content: center;
-    
-    width: 1em;
-    height: 1em;
-    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);
-
-
-
-}
-
-input:checked + svg {
-    display: block;
-}

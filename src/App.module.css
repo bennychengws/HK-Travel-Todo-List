@@ -1,11 +1,14 @@
 .container {
-  background-color: rgb(255, 245, 232);
+  /* background-color: #99C9E7; */
+  background: linear-gradient(180deg, rgba(153, 201, 231, 0.5) 12%,rgba(177, 251, 255, 0.07) 22%, rgba(255, 255, 255) 40%, rgba(236, 233, 230, 0.6) 90%,rgba(236, 233, 230, 0.8)); 
   min-height: 100vh;
+  min-width: 100vw;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Zen Maru Gothic', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color:rgba(56, 59, 57, 1);
 }
 
 .title {

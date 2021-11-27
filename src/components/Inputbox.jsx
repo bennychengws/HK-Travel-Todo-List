@@ -1,87 +1,82 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moduleCss from '../styles/Inputbox.module.css'
+import Calendar from 'react-calendar'
+import moment from 'moment';
+import 'react-calendar/dist/Calendar.css';
+import TaskList from './TaskList';
 
 const Inputbox = () => {
 
-  const [task, setTask] = useState(" ");
+  const [task, setTask] = useState("");
+  const [location, setLocation] = useState("")
   const [taskArray, setTaskArray] = useState([]);
-  const [count, setCount] = useState(0);
+  const [dateState, setDateState] = useState(new Date())
+  const [showCalendarModal, setCalendarModal] = useState(false);
+  
+  useEffect(() => {
+    if (typeof window !== "undefined" && JSON.parse(localStorage.getItem("tasks")))
+      setTaskArray(JSON.parse(localStorage.getItem("tasks")))
+  }, [])
 
-
-  const handleInput = event => {
+  const handleActivityInput = event => {
     setTask(event.target.value);
+  };
+
+  const handleLocationInput = event => {
+    setLocation(event.target.value);
   };
 
   const addToList = () => {
     console.log(task);
-    setCount(count + 1)
-    setTaskArray(oldArray => [...oldArray, { id: count, value: task, DoneState: false }]);
+    setTaskArray(oldArray => [...oldArray, { id: new Date(), activity: task, location: location, DoneState: false, date: dateState}]);
     setTask("")
+    setLocation("");
+    setDateState(new Date())
   }
 
-  const logValue = () => {
-    console.log(taskArray)
-  };
-
-
-  const taskDone = (id) => {
-    const newArray = taskArray.map((item) => {
-      if (item.id === id) {
-        const updatedItem = {
-          ...item,
-          DoneState: !item.DoneState,
-        };
-        return updatedItem;
-      }
-
-      return item;
-    });
-
-    setTaskArray(newArray);
-  }
-
-  const deleteTask = (id) => {
-    console.log(id)
-    setTaskArray(taskArray.filter((item) => item.id !== id))
-  }
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(taskArray))
+  }, [taskArray])
+  
 
   return (
     <div className={moduleCss.container}>
       <div className={moduleCss.addToDo}>Add Todo</div>
-      <form>
-        <input type="text" onChange={handleInput} placeholder="   Add new todo" value={task} className={moduleCss.box}></input><br />
+      <form className={moduleCss.inputForm}>
+        <div className="flex flex-row items-center"><div className="mr-2">Activity:</div><input type="text" onChange={handleActivityInput} placeholder="   Add new activity" value={task} className={moduleCss.box}></input></div>
+        <div className="flex flex-row items-center mt-3"><div className="mr-2">Location:</div><input type="text" onChange={handleLocationInput} placeholder="   Add new location" value={location} className={moduleCss.box}></input></div>
+        <div className="flex flex-row items-center mt-3">
+          <div className="mr-2">Date:</div><div>{dateState ? moment(dateState).format('Do MMM YYYY') : null}</div>
+          <button
+            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => setCalendarModal(true)}
+          >
+            Choose Date
+          </button>
+        </div>
+        {showCalendarModal ? 
+        <>
+        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <div className="flex flex-col	items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+            <button className="flex self-end text-3xl" onClick={() => setCalendarModal(false)}>x</button>
+            <Calendar  value={dateState} onChange={e => setDateState(e)} locale="en"/> 
+          </div>  
+          </div>
+          </div>
+        </div>
+        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+        : null}
       </form>
       <button type="button" onClick={addToList}
-        className="my-3 px-3 py-1 text-xs font-medium leading-6 text-center text-white transition bg-blue-500 rounded shadow ripple hover:shadow-lg hover:bg-blue-600 focus:outline-none"
+        className="mt-3 mb-7 px-3 py-1 font-bold text-sm font-medium leading-6 text-center text-white transition bg-blue-500 rounded shadow ripple hover:shadow-lg hover:bg-blue-600 focus:outline-none"
       >
         Submit
       </button>
-      {/* <button type="button" onClick={logValue}>logValue</button> */}
-
-      <ul>
-        {taskArray.map((item) => (
-          <div className={moduleCss.boxContainer}>
-            <li key={item.id} className={moduleCss.taskItem} style={{ textDecoration: item.DoneState ? 'line-through' : 'none', }} >{item.value}</li>
-            <div className={moduleCss.buttonContainer}>
-              <label className="my-0.5 flex justify-start items-start">
-                <div className="bg-white border-2 rounded border-gray-400 w-6 h-6 flex flex-shrink-0 justify-center items-center mr-0.5 focus-within:border-blue-500">
-                  <input type="checkbox" onClick={() => taskDone(item.id)} className="opacity-0 absolute"></input>
-                  <svg className="fill-current hidden w-4 h-4 text-green-500 pointer-events-none" viewBox="0 0 20 20" ><path d="M0 11l2-2 5 5L18 3l2 2L7 18z" /></svg>
-                </div>
-                <div className="select-none text-green-600">Done</div>
-              </label>
-              <label className="my-0.5 flex justify-start items-start">
-                <div className="bg-white border-2 rounded border-gray-400 w-6 h-6 flex flex-shrink-0 justify-center items-center mr-0.5 focus-within:border-blue-500">
-                  <input type="checkbox" onClick={() => deleteTask(item.id)} className="opacity-0 absolute"></input>
-                  <svg className="fill-current hidden w-4 h-4 text-green-500 pointer-events-none" viewBox="0 0 20 20" ><path d="M0 11l2-2 5 5L18 3l2 2L7 18z" /></svg>
-                </div>
-                <div className="select-none text-red-400">Delete</div>
-              </label>
-              {/* <button type="button" onClick={() => taskDone(item.id)} className="mx-0.5 px-1.5 py-1 text-sm font-medium rounded-sm block border-b border-indigo-300 bg-indigo-200 hover:bg-indigo-300 text-indigo-900">Done</button>
-              <button type="button" onClick={() => deleteTask(item.id)} className="mx-0.5 px-1.5 py-1 text-sm font-medium rounded-sm block border-b border-indigo-300 bg-red-200 hover:bg-red-300 text-red-900">Delete</button> */}
-            </div>
-          </div>))}
-      </ul>
+      <TaskList tasks={taskArray} />
     </div>
   )
 }

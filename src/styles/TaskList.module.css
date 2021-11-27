@@ -1,0 +1,42 @@
+
+.boxContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-style: solid;
+    border-color: rgba(200, 200, 200);;
+    border-width: 1px;
+    border-radius: 5px;
+    width: calc(1em + 75vw);        
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);;
+    align-items: center;
+}
+
+.taskItem {
+    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);
+    text-align: left;
+    /* overflow-wrap: break-word; */
+}
+
+.checkbox {
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    
+    width: 1em;
+    height: 1em;
+    margin: calc(0.5em + 0.2vw) calc(0.5em + 0.2vh);
+
+
+
+}
+
+input:checked + svg {
+    display: block;
+}
