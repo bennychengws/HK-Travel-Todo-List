@@ -2,11 +2,13 @@ import React, {useState, useEffect} from "react";
 import moduleCss from "../styles/TaskList.module.css";
 import DeleteTask from './DeleteTask';
 import moment from "moment";
+import axios from "axios";
 
 const TaskList = ({tasks}) => {
   const [taskArray, setTaskArray] = useState([]);
   const [showDeleteTaskModal, setShowDeleteTaskModal] = useState(false);
   const [pendingNewArray, setPendingNewArray] = useState(null)
+  const [weatherForecastData, setForecastWeatherData] = useState([])
 
   useEffect(() => {
     setTaskArray(tasks)
@@ -37,6 +39,37 @@ const TaskList = ({tasks}) => {
     setShowDeleteTaskModal(true);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get(
+          "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en"
+        );
+        setForecastWeatherData(res.data.weatherForecast)
+        console.log(res.data.weatherForecast)
+      } catch (error) {
+        
+      }
+    } 
+    fetchData();
+  }, [tasks])
+
+  useEffect(() => {
+    for (let i = 0; i < weatherForecastData.length; i++) {
+      // console.log(weatherForecastData[i].forecastDate)
+    }
+  }, [weatherForecastData])
+
+
+  const simpleWeatherForecast = (date) => {
+    for (let i = 0; i < weatherForecastData.length; i++) {
+      if (weatherForecastData[i].forecastDate === date) {
+        return weatherForecastData[i].forecastWeather
+      }
+    }
+    return null
+  }
+
   return (
     <div>
       <ul>
@@ -45,7 +78,7 @@ const TaskList = ({tasks}) => {
             <li
               key={item.id} className={moduleCss.taskItem} style={{textDecoration: item.DoneState ? "line-through" : "none",}}
             >
-              {item.activity}, Location: {item.location}
+              <div className="font-bold">{item.activity}</div><div>{item.location}</div><div className="text-blue-400">{simpleWeatherForecast(moment(item.date).format('YYYYMMDD')) ? simpleWeatherForecast(moment(item.date).format('YYYYMMDD')) : <div className="text-yellow-500">No forecast data available now</div>}</div>
             </li>
             <div className={moduleCss.buttonContainer}>
               <div style={{textDecoration: item.DoneState ? "line-through" : "none",}}>{moment(item.date).format('Do MMM YYYY')}</div>

@@ -14,11 +14,10 @@
 .inputForm {
     display: flex;
     flex-direction: column;
-    /* padding: 1rem;
-    border: solid;
-    border-width: 1px;
+    background-color: rgba(173, 201, 231, 0.5);
     border-radius: 10px;
-    border-color: yellowgreen; */
+    color: rgba(10, 10, 10)
+
 }
 
 .box {

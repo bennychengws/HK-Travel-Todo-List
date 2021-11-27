@@ -48,7 +48,7 @@ const Inputbox = () => {
         <div className="flex flex-row items-center mt-3">
           <div className="mr-2">Date:</div><div>{dateState ? moment(dateState).format('Do MMM YYYY') : null}</div>
           <button
-            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+            className="bg-indigo-400 text-white active:bg-indigo-500 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
             type="button"
             onClick={() => setCalendarModal(true)}
           >
