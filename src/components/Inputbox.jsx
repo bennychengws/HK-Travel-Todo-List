@@ -28,11 +28,12 @@ const Inputbox = () => {
 
   const addToList = () => {
     console.log(task);
-    setTaskArray(oldArray => [...oldArray, { id: new Date(), activity: task, location: location, DoneState: false, date: dateState}]);
+    setTaskArray(oldArray => [...oldArray, { id: new Date(), activity: task, location: location, doneState: false, date: dateState}]);
     setTask("")
     setLocation("");
     setDateState(new Date())
   }
+
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(taskArray))
@@ -43,17 +44,20 @@ const Inputbox = () => {
     <div className={moduleCss.container}>
       <div className={moduleCss.addToDo}>Add Todo</div>
       <form className={moduleCss.inputForm}>
-        <div className="flex flex-row items-center"><div className="mr-2">Activity:</div><input type="text" onChange={handleActivityInput} placeholder="   Add new activity" value={task} className={moduleCss.box}></input></div>
-        <div className="flex flex-row items-center mt-3"><div className="mr-2">Location:</div><input type="text" onChange={handleLocationInput} placeholder="   Add new location" value={location} className={moduleCss.box}></input></div>
+        <div className="flex flex-row items-center justify-between"><div className="mr-2">Activity:</div><input type="text" onChange={handleActivityInput} placeholder="   Add new activity" value={task} className={moduleCss.box}></input></div>
+        <div className="flex flex-row items-center mt-3 justify-between"><div className="mr-2">Location:</div><input type="text" onChange={handleLocationInput} placeholder="   Add new location" value={location} className={moduleCss.box}></input></div>
         <div className="flex flex-row items-center mt-3">
-          <div className="mr-2">Date:</div><div>{dateState ? moment(dateState).format('Do MMM YYYY') : null}</div>
-          <button
-            className="bg-indigo-400 text-white active:bg-indigo-500 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-            type="button"
-            onClick={() => setCalendarModal(true)}
-          >
-            Choose Date
-          </button>
+          <div className="mr-2">Start Date:</div>
+          <div className="flex flex-row items-center">
+            <div>{dateState ? moment(dateState).format('Do MMM YYYY') : null}</div>
+            <button
+              className="bg-indigo-400 text-white active:bg-indigo-500 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => setCalendarModal(true)}
+            >
+              Choose Date
+            </button>
+          </div>
         </div>
         {showCalendarModal ? 
         <>

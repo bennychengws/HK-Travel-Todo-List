@@ -19,7 +19,7 @@ const TaskList = ({tasks}) => {
       if (item.id === id) {
         const updatedItem = {
           ...item,
-          DoneState: !item.DoneState,
+          doneState: !item.doneState,
         };
         return updatedItem;
       }
@@ -67,12 +67,12 @@ const TaskList = ({tasks}) => {
         {taskArray.map((item) => (
           <div className={moduleCss.boxContainer}>
             <li
-              key={item.id} className={moduleCss.taskItem} style={{textDecoration: item.DoneState ? "line-through" : "none",}}
+              key={item.id} className={moduleCss.taskItem} style={{textDecoration: item.doneState ? "line-through" : "none",}}
             >
               <div className="font-bold">{item.activity}</div><div>{item.location}</div><div className="text-blue-400">{simpleWeatherForecast(moment(item.date).format('YYYYMMDD')) ? simpleWeatherForecast(moment(item.date).format('YYYYMMDD')) : <div className="text-yellow-500">No forecast data available now</div>}</div>
             </li>
             <div className={moduleCss.buttonContainer}>
-              <div style={{textDecoration: item.DoneState ? "line-through" : "none",}}>{moment(item.date).format('Do MMM YYYY')}</div>
+              <div style={{textDecoration: item.doneState ? "line-through" : "none",}}>{moment(item.date).format('Do MMM YYYY')}</div>
               <div>
               <button
                 className="flex justify-start items-start w-16 bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-3 py-1 ml-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
